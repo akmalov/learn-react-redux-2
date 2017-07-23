@@ -1,38 +1,22 @@
+// REACT
 import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
 
-import { applyMiddleware, createStore } from 'redux';
+import {applyMiddleware, createStore} from'redux';
 import logger from 'redux-logger';
-
+// IMPORT COMBINED REDUCERS
 import reducers from './reducers/index';
-//import { addToCart } from './actions/cartActions';
-import { postBooks, deleteBooks, updateBooks } from './actions/booksActions';
+// IMPORT ACTIONS
+import {addToCart} from'./actions/cartActions';
+
+import {postBooks, deleteBooks, updateBooks} from './actions/booksActions';
 
 const middleware = applyMiddleware(logger);
 const store = createStore(reducers, middleware);
-
-import BooksList from './components/pages/booksList';
-
+import BooksList from'./components/pages/bookslist';
 render(
     <Provider store={store}>
         <BooksList />
-    </Provider>,
-    document.getElementById('app')
+    </Provider>, document.getElementById('app')
 );
-
-//store.dispatch(postBooks(
-
-//));
-
-//store.dispatch(deleteBooks(
-//    {id: 1}
-//));
-
-//store.dispatch(updateBooks(
-//    {
-//        id: 2,
-//        title: 'Learn React in 24h'
-//    }
-//));
-//store.dispatch(addToCart([{id: 1}]));

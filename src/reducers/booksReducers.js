@@ -1,9 +1,10 @@
 export function booksReducers(state={
-    books:[{
-        id: 1,
-        title: 'this is the book title',
-        description: 'this is the book description',
-        price: 44.33
+    books:[
+        {
+            id: 1,
+            title: 'this is the book title',
+            description: 'this is the book description',
+            price: 44.33
         },
         {
             id: 2,
@@ -13,8 +14,11 @@ export function booksReducers(state={
         }]
     }, action){
     switch(action.type){
-        case "GET_BOOKs":
+        case "GET_BOOKS":
             return {...state, books:[...state.books]};
+            break;
+        case "POST_BOOKS":
+            return {books: [...state.books, ...action.payload]};
             break;
         case "DELETE_BOOK":
             // Create a copy of the current array of books

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Row, Col, Well, Button } from 'react-bootstrap';
-
-class BookItem extends React.Component {
+import {Row, Col, Well, Button} from'react-bootstrap';
+class BookItem extends React.Component{
     render(){
         return(
             <Well>
@@ -17,4 +16,4 @@ class BookItem extends React.Component {
         )
     }
 }
-export default  BookItem;
+export default BookItem;
