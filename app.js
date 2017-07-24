@@ -31,10 +31,10 @@ var Books = require('./models/books.js');
 
 //---->>> POST BOOKS <<<----
 
-app.post('/books', function (req, res) {
+app.post('/books', function(req, res){
     var book = req.body;
-    Books.create(book, function (err, books) {
-        if (err) {
+    Books.create(book, function(err, books){
+        if(err){
             throw err;
         }
         res.json(books);
