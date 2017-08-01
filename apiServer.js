@@ -105,6 +105,24 @@ app.put('/books/:_id', function(req, res){
             res.json(books);
         })
 });
+
+//---->>> GET BOOKS IMAGES API <<<-----
+
+app.get('/images', function(req, res){
+    const imgFolder = __dirname + '/public/images/';
+    const fs = require('fs');
+    fs.readdir(imgFolder, function(err, files){
+        if(err){
+            return console.error(err);
+        }
+        const filesArr = [];
+        files.forEach(function(file){
+            filesArr.push({name: file});
+        });
+        res.json(filesArr);
+    })
+});
+
 //---->>> END API <<<-----
 
 app.listen(3001, function(err){
