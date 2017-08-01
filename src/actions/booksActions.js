@@ -26,7 +26,6 @@ export function postBooks(book){
             }
 }
 
-
 export function deleteBooks(id){
     return function(dispatch){
         axios.delete("/api/books/" + id)
