@@ -10,25 +10,24 @@ class Main extends React.Component{
     componentDidMount(){
         this.props.getCart();
     }
-    render(){
+    render() {
         return(
             <div>
-                <Menu cartItemsNumber={this.props.totalQty}/>
+                <Menu cartItemsNumber={this.props.totalQty} />
                 {this.props.children}
-                <Footer/>
+                <Footer />
             </div>
         );
     }
 }
-
-function mapStateToProps(state) {
+function mapStateToProps(state){
     return {
         totalQty: state.cart.totalQty
     }
 }
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        getCart: getCart
+        getCart:getCart
     }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

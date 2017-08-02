@@ -10,26 +10,27 @@ class BooksForm extends React.Component{
     constructor() {
         super();
         this.state = {
-            images: [{}],
+            images:[{}],
             img:''
         }
     }
     componentDidMount(){
         this.props.getBooks();
+        //GET IMAGES FROM API
         axios.get('/api/images')
             .then(function(response){
-                this.setState({images: response.data})
+                this.setState({images:response.data});
             }.bind(this))
             .catch(function(err){
-                this.setState({images: 'error loading image files from the server', img:''})
+                this.setState({images:'error loading image files from the server', img:''})
             }.bind(this))
     }
     handleSubmit(){
         const book=[{
             title: findDOMNode(this.refs.title).value,
             description: findDOMNode(this.refs.description).value,
-            images: findDOMNode(this.refs.image).value,
-            price: findDOMNode(this.refs.price).value
+            images:findDOMNode(this.refs.image).value,
+            price: findDOMNode(this.refs.price).value,
         }];
         this.props.postBooks(book);
     }
@@ -39,30 +40,33 @@ class BooksForm extends React.Component{
 
         this.props.deleteBooks(bookId);
     }
-    handleSelect(){
+
+    handleSelect(img){
         this.setState({
-            img: '/images/' + img
+            img: '/images/'+ img
         })
     }
+
     resetForm(){
+        //RESET THE Button
         this.props.resetButton();
+
         findDOMNode(this.refs.title).value = '';
         findDOMNode(this.refs.description).value = '';
         findDOMNode(this.refs.price).value = '';
-        this.setState({img:''})
+        this.setState({img:''});
     }
     render(){
         const booksList = this.props.books.map(function(booksArr){
             return (
-                <option key={booksArr._id}>{booksArr._id}</option>
+                <option key={booksArr._id}> {booksArr._id}</option>
             )
         });
-
-        const imgList = this.state.map(function(imgArr, i){
-           return(
-               <MenuItem key={i} eventkey={imgArr.name}
-               onClick={this.handleSelect.bind(this, imgArr.name)}>{imgArr.name}</MenuItem>
-           )
+        const imgList = this.state.images.map(function(imgArr, i){
+            return(
+                <MenuItem key={i} eventKey={imgArr.name}
+                          onClick={this.handleSelect.bind(this, imgArr.name)}>{imgArr.name}</MenuItem>
+            )
         }, this);
 
         return(
@@ -91,7 +95,7 @@ class BooksForm extends React.Component{
                                     type="text"
                                     placeholder="Enter Title"
                                     ref="title" />
-                                    <FormControl.Feedback/>
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <FormGroup controlId="description" validationState={this.props.validation}>
                                 <ControlLabel>Description</ControlLabel>
@@ -99,7 +103,7 @@ class BooksForm extends React.Component{
                                     type="text"
                                     placeholder="Enter Description"
                                     ref="description" />
-                                    <FormControl.Feedback/>
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <FormGroup controlId="price" validationState={this.props.validation}>
                                 <ControlLabel>Price</ControlLabel>
@@ -107,15 +111,15 @@ class BooksForm extends React.Component{
                                     type="text"
                                     placeholder="Enter Price"
                                     ref="price" />
-                                    <FormControl.Feedback/>
+                                <FormControl.Feedback/>
                             </FormGroup>
                             <Button
                                 onClick={(!this.props.msg)?(this.handleSubmit.bind(this)):(this.resetForm.bind(this))}
                                 bsStyle={(!this.props.style)?("primary"):(this.props.style)}>
                                 {(!this.props.msg)?("Save book"):(this.props.msg)}
-                                </Button>
+                            </Button>
                         </Panel>
-                        <Panel style={{marginTop: '25px'}}>
+                        <Panel>
                             <FormGroup controlId="formControlsSelect">
                                 <ControlLabel>Select a book id to delete</ControlLabel>
                                 <FormControl ref="delete" componentClass="select" placeholder="select">
@@ -127,6 +131,7 @@ class BooksForm extends React.Component{
                         </Panel>
                     </Col>
                 </Row>
+
             </Well>
         )
     }
@@ -139,13 +144,12 @@ function mapStateToProps(state){
         validation: state.books.validation
     }
 }
-
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-            postBooks,
-            deleteBooks,
-            getBooks,
-            resetButton
-        }, dispatch)
+        postBooks,
+        deleteBooks,
+        getBooks,
+        resetButton
+    }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BooksForm);
